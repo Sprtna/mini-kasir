@@ -1,32 +1,46 @@
 let nomor = 1;
-let total = 0; // Variabel untuk menyimpan total belanja
+let total = 0;
 
 function tambahBarang() {
-    const nama = document.getElementById('namaBarang').value;
-    const hargaInput = document.getElementById('hargaBarang').value;
+    const namaInput = document.getElementById('namaBarang');
+    const hargaInput = document.getElementById('hargaBarang');
 
-    if (nama === '' || hargaInput === '') {
-        alert('Harap isi nama dan harga barang!');
+    const nama = namaInput.value;
+    const harga = parseInt(hargaInput.value);
+
+    if (nama === '' || isNaN(harga)) {
+        alert('Harap isi nama dan harga barang dengan benar!');
         return;
     }
 
-    const harga = parseInt(hargaInput);
     const tabel = document.getElementById('tabelKasir');
-
-    // Buat baris baru
     const barisBaru = document.createElement('tr');
+
+    // Tambahkan kolom tombol hapus di akhir baris
     barisBaru.innerHTML = `
         <td>${nomor++}</td>
         <td>${nama}</td>
         <td>Rp ${harga.toLocaleString('id-ID')}</td>
+        <td><button onclick="hapusBarang(this, ${harga})" style="background-color: #dc3545;">Hapus</button></td>
     `;
+
     tabel.appendChild(barisBaru);
 
-    // Update total harga
+    // Update total
     total += harga;
     document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 
-    // Bersihkan input
-    document.getElementById('namaBarang').value = '';
-    document.getElementById('hargaBarang').value = '';
+    // Reset form
+    namaInput.value = '';
+    hargaInput.value = '';
+}
+
+function hapusBarang(tombol, hargaBarang) {
+    // Hapus baris dari tabel
+    const baris = tombol.parentElement.parentElement;
+    baris.remove();
+
+    // Kurangi total harga
+    total -= hargaBarang;
+    document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
