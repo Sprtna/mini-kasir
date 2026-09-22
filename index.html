@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="id">
+<lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Kasir</title>
+    <style>
+        body { font-family: sans-serif; margin: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 10px; }
+        input, button { padding: 8px; margin-right: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Aplikasi Mini Kasir</h1>
-    <p>Selamat datang di sistem kasir lokal!</p>
+    <div class="container">
+        <h1>Aplikasi Mini Kasir</h1>
+        
+        <div class="form-group">
+            <input type="text" id="namaBarang" placeholder="Nama Barang">
+            <input type="number" id="hargaBarang" placeholder="Harga (Rp)">
+            <button onclick="tambahBarang()">Tambah</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Barang</th>
+                    <th>Harga</th>
+                </tr>
+            </thead>
+            <tbody id="tabelKasir">
+                <!-- Data barang masuk ke sini -->
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
