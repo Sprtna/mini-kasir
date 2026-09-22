@@ -1,5 +1,9 @@
-let nomor = 1;
-let total = 0;
+let daftarBarang = JSON.parse(localStorage.getItem('kasirBarang')) || [];
+
+// Fungsi untuk menampilkan data dari storage saat halaman dibuka
+document.addEventListener('DOMContentLoaded', () => {
+    tampilkanData();
+});
 
 function tambahBarang() {
     const namaInput = document.getElementById('namaBarang');
@@ -13,34 +17,48 @@ function tambahBarang() {
         return;
     }
 
-    const tabel = document.getElementById('tabelKasir');
-    const barisBaru = document.createElement('tr');
+    // Masukkan data ke array
+    const barangBaru = { id: Date.now(), nama: nama, harga: harga };
+    daftarBarang.push(barangBaru);
 
-    // Tambahkan kolom tombol hapus di akhir baris
-    barisBaru.innerHTML = `
-        <td>${nomor++}</td>
-        <td>${nama}</td>
-        <td>Rp ${harga.toLocaleString('id-ID')}</td>
-        <td><button onclick="hapusBarang(this, ${harga})" style="background-color: #dc3545;">Hapus</button></td>
-    `;
-
-    tabel.appendChild(barisBaru);
-
-    // Update total
-    total += harga;
-    document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+    // Simpan ke LocalStorage dan perbarui tabel
+    simpanDanTampilkan();
 
     // Reset form
     namaInput.value = '';
     hargaInput.value = '';
 }
 
-function hapusBarang(tombol, hargaBarang) {
-    // Hapus baris dari tabel
-    const baris = tombol.parentElement.parentElement;
-    baris.remove();
+function hapusBarang(id) {
+    // Filter barang berdasarkan ID
+    daftarBarang = daftarBarang.filter(barang => barang.id !== id);
 
-    // Kurangi total harga
-    total -= hargaBarang;
+    // Simpan ke LocalStorage dan perbarui tabel
+    simpanDanTampilkan();
+}
+
+function simpanDanTampilkan() {
+    localStorage.setItem('kasirBarang', JSON.stringify(daftarBarang));
+    tampilkanData();
+}
+
+function tampilkanData() {
+    const tabel = document.getElementById('tabelKasir');
+    tabel.innerHTML = '';
+
+    let total = 0;
+
+    daftarBarang.forEach((barang, index) => {
+        total += barang.harga;
+        const barisBaru = document.createElement('tr');
+        barisBaru.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${barang.nama}</td>
+            <td>Rp ${barang.harga.toLocaleString('id-ID')}</td>
+            <td><button onclick="hapusBarang(${barang.id})" style="background-color: #dc3545;">Hapus</button></td>
+        `;
+        tabel.appendChild(barisBaru);
+    });
+
     document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
