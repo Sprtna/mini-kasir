@@ -1,31 +1,32 @@
 let nomor = 1;
+let total = 0; // Variabel untuk menyimpan total belanja
 
 function tambahBarang() {
-    // Ambil nilai dari input
     const nama = document.getElementById('namaBarang').value;
-    const harga = document.getElementById('hargaBarang').value;
+    const hargaInput = document.getElementById('hargaBarang').value;
 
-    // Validasi: pastikan input tidak kosong
-    if (nama === '' || harga === '') {
+    if (nama === '' || hargaInput === '') {
         alert('Harap isi nama dan harga barang!');
         return;
     }
 
-    // Ambil elemen tabel
+    const harga = parseInt(hargaInput);
     const tabel = document.getElementById('tabelKasir');
 
-    // Buat baris baru di tabel
+    // Buat baris baru
     const barisBaru = document.createElement('tr');
     barisBaru.innerHTML = `
         <td>${nomor++}</td>
         <td>${nama}</td>
-        <td>Rp ${parseInt(harga).toLocaleString('id-ID')}</td>
+        <td>Rp ${harga.toLocaleString('id-ID')}</td>
     `;
-
-    // Masukkan baris ke dalam tabel
     tabel.appendChild(barisBaru);
 
-    // Bersihkan input setelah ditambah
+    // Update total harga
+    total += harga;
+    document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+
+    // Bersihkan input
     document.getElementById('namaBarang').value = '';
     document.getElementById('hargaBarang').value = '';
 }
