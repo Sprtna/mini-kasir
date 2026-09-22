@@ -62,3 +62,30 @@ th {
     background-color: #f8f9fa;
     color: #555;
 }
+/* Styling khusus saat tombol cetak ditekan */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+
+    /* Sembunyikan form input dan tombol-tombol saat dicetak */
+    .form-group, 
+    button, 
+    th:nth-child(4), 
+    td:nth-child(4) {
+        display: none !important;
+    }
+
+    .container {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
