@@ -62,3 +62,9 @@ function tampilkanData() {
 
     document.getElementById('totalHarga').innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
+// Di dalam fungsi yang meng-update total harga (misal updateTampilan):
+const diskonInput = parseFloat(document.getElementById("diskon").value) || 0;
+const potongan = (subtotal * diskonInput) / 100;
+const totalAkhir = subtotal - potongan;
+
+document.getElementById("totalHarga").innerText = "Rp " + totalAkhir.toLocaleString("id-ID");

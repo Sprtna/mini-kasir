@@ -89,3 +89,16 @@ th {
         margin-bottom: 10px;
     }
 }
+.diskon-box {
+  margin-top: 15px;
+  background: #fff3cd;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.diskon-box input {
+  max-width: 100px;
+}
